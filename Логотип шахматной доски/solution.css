@@ -1,0 +1,46 @@
+:root {
+  --dark: #654430;
+  --light: #f7ebcc;
+  --checker-color: #5f5d5e;
+  --outline-color: #252324;
+
+  --outline-thickness: 3px;
+  --rest-thickness: 5px;
+  --inner-radius: calc(40px / 2);
+
+  --outline-stop: calc(var(--inner-radius) + var(--outline-thickness));
+  --checker-stop: calc(var(--outline-stop) + var(--rest-thickness));
+
+  --checker: 
+    radial-gradient(
+      circle at 50% 50%,
+      var(--checker-color),
+      var(--checker-color) var(--inner-radius),
+      var(--outline-color) var(--inner-radius),
+      var(--outline-color) var(--outline-stop),
+      var(--checker-color) var(--outline-stop),
+      var(--checker-color) var(--checker-stop),
+      var(--light) var(--checker-stop)
+    )
+}
+
+div {
+  background-color: var(--dark);
+}
+
+div:before {
+  display: block;
+  content: "";
+  background: var(--checker);
+  width: 50%;
+  height: 50%;
+}
+
+div:after {
+  display: block;
+  content: "";
+  background: var(--checker);
+  width: 50%;
+  height: 50%;
+  margin-left: auto;
+}
