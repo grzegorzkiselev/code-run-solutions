@@ -1,4 +1,6 @@
-function isSumOfTwoExists(nums, k) {  
+const assert = require("assert");
+
+function isSumOfTwoExists(nums, k) {
   const cache = new Set();
 
   for (num of nums) {
@@ -12,4 +14,4 @@ function isSumOfTwoExists(nums, k) {
   return false;
 }
 
-console.log(isSumOfTwoExists([10, 15, 3, 7], 17));
+assert.equal(isSumOfTwoExists([10, 15, 3, 7], 17), true);

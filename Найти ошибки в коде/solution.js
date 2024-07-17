@@ -1,3 +1,5 @@
+const assert = require("assert");
+
 function withErrors({ participants, sports }) {
   /**
    * Подобно оператору new создает экземпляр объекта,
@@ -38,9 +40,10 @@ function withErrors({ participants, sports }) {
   return contest.assignParicipants();
 }
 
-console.log(withErrors(
-  {
+assert.deepEqual(
+  withErrors({
     "participants": ["Mary", "Kate"],
     "sports": ["football", "hockey"],
-  },
-));
+  }),
+  [ [ "football", "Kate" ], [ "hockey", "Mary" ] ],
+)

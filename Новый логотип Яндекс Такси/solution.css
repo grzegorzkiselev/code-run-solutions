@@ -1,0 +1,35 @@
+:root {
+  --border-radius: 36px;
+  --black: #000;
+  --white: #f5f4f0;
+  --yellow-gradient: linear-gradient(145deg,
+      #fcdd2e,
+      #fcb600)
+}
+
+div {
+  background: var(--black);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+div:before {
+  content: "";
+  display: block;
+  height: 50%;
+  background: var(--yellow-gradient);
+}
+
+div:after {
+  content: "";
+  display: block;
+  height: 50%;
+  width: 50%;
+  background:
+    linear-gradient(178deg,
+      rgb(0 0 0 / .18),
+      rgb(0 0 0 / 0) 7px,
+      transparent),
+    linear-gradient(to bottom,
+      var(--white), var(--white))
+}
