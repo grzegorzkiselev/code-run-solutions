@@ -29,7 +29,13 @@
 
 function decode(message, replaces) {
   const replacementsMap = new Map();
-  let mapSize = replaces;
+  if (!message) {
+    return message;
+  }
+
+  if (!replaces || replaces.length === 0) {
+    return message;
+  }
 
   replaces.forEach((replacement) => {
     const key = replacement.from[0];
@@ -54,13 +60,13 @@ function decode(message, replaces) {
     result += to;
   }
 
-  console.log(result)
+  return result;
 }
 
-decode('Aa', [{ from: 'a', to: 'b' }])
-decode('ab', [{ from: 'a', to: 'b' }])
-decode('ab', [{ from: 'a', to: 'ba' }, { from: 'b', to: 'r' }])
-decode('ab', [{ from: 'b', to: 'bar' }, { from: 'ab', to: 'foo' }])
-decode("ab", [{ "from": "a", "to": "bar" }, { "from": "ab", "to": "foo" }])
+console.log(decode('Aa', [{ from: 'a', to: 'b' }]));
+console.log(decode('ab', [{ from: 'a', to: 'b' }]));
+console.log(decode('ab', [{ from: 'a', to: 'ba' }, { from: 'b', to: 'r' }]));
+console.log(decode('ab', [{ from: 'b', to: 'bar' }, { from: 'ab', to: 'foo' }]));
+console.log(decode("ab", [{ "from": "a", "to": "bar" }, { "from": "ab", "to": "foo" }]));
 
 module.exports = { decode };
