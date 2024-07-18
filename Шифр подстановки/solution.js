@@ -14,61 +14,28 @@
  */
 
 function decode(message, replaces) {
-  let i = 0;
-
-  // return replaces.reduce((result, { from, to }) => {
-
-
-    // const [replacedStart, replacedEnd] = replaced;
-    // const start = match.index;
-    // const end = start + to.length;
-    // const isOverlapped = start > replacedStart && start < replacedEnd
-    //   || end < replacedEnd && end > replacedStart;
-
-    // if (isOverlapped) {
-    //   return result;
-    // }
-
-    // replaced[0] = Math.min(match.index, replaced[0]);
-    // replaced[1] = Math.max(match.index + to.length, replaced[1]);
-    //
-
-
-  // }, message)
-
-  // const reg = new RegExp(from, "g");
-  // const match = result.match(reg);
-
-  // if (!match || match.index < i) {
-  //   return result;
-  // }
-
-  // return result.replace(reg, to)
-  //
-
-  if (replaces.length === 0) {
-    return message;
-  }
-
   const map = new Map();
-  const prereg = replaces.reduceRight((result, {from, to}, index) => {
-    const tos = map.get(from)
-    map.set(
-      from,
-      Array.isArray(tos) ? (tos.push(to), tos) : [to]
-    )
-    return result + "(" + from + ")" + (index > 0 ? "|" : "");
-  }, "")
+  const reg = new RegExp(
+    replaces.reduceRight((result, {from}, index) => {
+      const { from: leftFrom, to: leftTo } = replaces[replaces.length - 1 - index]
+      const tos = map.get(
+          leftFrom
+      );
+      map.set(
+        leftFrom,
+        Array.isArray(tos) ? (tos.push(leftTo), tos) : [leftTo]
+      );
 
-  const reg = new RegExp(prereg);
-  console.log(reg);
-  const res = message.split(reg).filter(Boolean);
+      return result + "(" + from + ")" + (index > 0 ? "|" : "");
+    }, "")
+  );
 
-  res.forEach((chunk, index) => {
-    map.has(chunk) && map.get(chunk).length > 0 && (res[index] = map.get(chunk).pop());
-  });
-
-  return res.join("");
+  return message.split(reg).reduce((result, chunk, index) => {
+    const candidate = map.get(chunk);
+    return result + (candidate && candidate.length > 0
+        ? candidate.pop()
+        : chunk || "");
+  }, "");
 }
 
 console.log(decode('Aa', [{ from: 'a', to: 'b' }]));

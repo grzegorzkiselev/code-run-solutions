@@ -1,45 +1,19 @@
-const line = document.querySelector(".line");
+const flatNotes = [7,7,7,3,10,null,7,3,10,7,14,14,14,15,10,null,6,3,10,7];
+
 const keys = document.querySelector(".keys").children;
-const notes = {
-  C1: 0,
-  D1: 2,
-  E1: 4,
-  F1: 5,
-  G1: 7,
-  A1: 9,
-  H1: 11,
-  C2: 13,
-  D2: 15,
-  E2: 17,
-  F2: 18,
-  G2: 20,
-  A2: 22,
-  H2: 24,
-};
+
+const TIMEOUT = 12000;
+const noteLength = TIMEOUT / flatNotes.length;
+let i = 0;
 
 const play = () => {
-  Array.from(line.children).forEach((item) => {
-    const classList = item.classList;
-
-    const offset = classList.length === 3
-      ? classList[2] === "flat"
-        ? -1
-        : classList[2] === "sharp"
-          ? 1
-          : 0
-      : 0;
-
-    const note = classList[1];
-    note !== "separator" && keys[notes[note] + offset];
-    note !== "separator" && console.log(keys[notes[note] + offset]);
-    const button = note !== "separator" && keys[notes[note] + offset];
-
-    setTimeout((button) => {
-      button.click();
-    }, 0, button);
-  });
-};
+  if (i < noteLength) {
+    setTimeout((i) => {
+      keys[flatNotes[i]] && keys[flatNotes[i]].click();
+      play();
+    }, noteLength, i);
+    i++;
+  }
+}
 
 play();
-
-document.addEventListener("click", play);
