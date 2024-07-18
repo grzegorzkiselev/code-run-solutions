@@ -30,6 +30,5 @@ div:after {
       rgb(0 0 0 / .18),
       rgb(0 0 0 / 0) 7px,
       transparent),
-    linear-gradient(to bottom,
-      var(--white), var(--white))
+    var(--white)
 }
